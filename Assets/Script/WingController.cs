@@ -8,6 +8,7 @@ public class WingController : MonoBehaviour {
 	public float WingWide = 3.0f;			// 翼の幅
 	public float PartsDist = 0.4f;
 	public float WingRotMax = 80.0f;
+	public float WingRotPlus = 10.0f;
 	public float PartsRotMax = 5.0f;
 
 	int[] right = new int[]{1,-1};
@@ -49,27 +50,23 @@ public class WingController : MonoBehaviour {
 	/// 翼を制御
 	/// </summary>
 	void moveWing(){
-		// 入力
-		float[,] sticks = new float[2,2];
-		sticks [0, 0] = Input.GetAxis ("Horizontal_R1");
-		sticks [0, 1] = Input.GetAxis ("Vertical_R1");
-		sticks [1, 0] = Input.GetAxis ("Horizontal_L1");
-		sticks [1, 1] = Input.GetAxis ("Vertical_L1");
+		float[,] sticks = InputManager.Instance.Sticks;
 
 		// 位置調整
 		for (int i = 0; i < 2; i++) {
 			GameObject temp = new GameObject ();
-			temp.transform.parent = transform;
-			temp.transform.localPosition = Vector3.zero;
-			temp.transform.Rotate (WingRotMax*sticks[i,1],(90-30)*right [i],0);
+			//temp.transform.parent = transform;
+			temp.transform.position = Vector3.zero;
+			temp.transform.Rotate (WingRotMax*sticks[i,1]+WingRotPlus,(90-0)*right [i],0);
 			for (int j = 0; j < PartsValue; j++) {
 				GameObject parts = Parts[i,j];
-				parts.transform.position = temp.transform.position;
-				parts.transform.rotation = temp.transform.rotation;
-				parts.transform.position += parts.transform.right * (parts.transform.localScale.x/2) * right[i];
+				parts.transform.localPosition = temp.transform.position;
+				parts.transform.localRotation = temp.transform.rotation;
+				parts.transform.localPosition += temp.transform.right * (parts.transform.localScale.x/2) * right[i];
 				temp.transform.Rotate (-PartsRotMax*WingRotMax*(sticks[i,0]-1f),-3f*right[i],0);
 				temp.transform.position += temp.transform.forward * PartsDist;
 			}
+			Destroy (temp);
 		}
 	}
 }
