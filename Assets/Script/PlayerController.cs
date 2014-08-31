@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// プレイヤーの動きを制御する。
+/// 入力は、PlayerInputから受け取る。
+/// </summary>
 public class PlayerController : MonoBehaviour {
 
 	public GameObject Body;
@@ -12,6 +16,8 @@ public class PlayerController : MonoBehaviour {
 	public float RotPower = 2.0f;
 	public float DownStopPower = 2.0f;
 	public float RotStopPower = 2.0f;
+	float[,] stick = new float[2,2];	// スティック入力位置
+	float[,] fly = new float[2,2];	// スティックの早さ
 
 	float ForwardSpeed = 0;
 	Vector3 RotSpeed = Vector3.zero;
@@ -28,10 +34,13 @@ public class PlayerController : MonoBehaviour {
 		stopFly ();
 	}
 
+	public void setInput(float[,] stickinput, float[,] flyinput){
+		stick = stickinput;
+		fly = flyinput;
+	}
+
 	// 羽ばたいた時の挙動
 	void moveFly(){
-		float[,] stick = InputManager.Instance.Sticks;
-		float[,] fly = InputManager.Instance.getStickSpeed ();
 		float speedR = Mathf.Max (fly [0, 1] * stick [0, 0], 0);
 		float speedL = Mathf.Max (fly [1, 1] * stick [1, 0], 0);
 		float rot = speedR - speedL;
@@ -53,7 +62,6 @@ public class PlayerController : MonoBehaviour {
 		float nowrot = Mathf.Abs (RotZ.transform.localRotation.z);
 		float rotpower = Mathf.Abs (nowrot-0.5f)*2;
 		// 入力
-		float[,] stick = InputManager.Instance.Sticks;
 		float stopperR = Mathf.Max(stick [0, 0],0);
 		float stopperL = Mathf.Max(stick [1, 0],0);
 		// 回転停止力
@@ -78,7 +86,7 @@ public class PlayerController : MonoBehaviour {
 
 		// 傾きによるy軸円回転
 		//rigidbody.AddTorque (0,-(1-rotpower)*rotright,0);
-		Rot.y += -(1 - rotpower) * rotright * stopperR * stopperL*ForwardSpeed*0.003f;
+		Rot.y += -(1 - rotpower) * rotright * stopperR * stopperL;
 		if (Rot.y < -180) {
 			Rot.y += 360;
 		} else if (Rot.y > 180) {
@@ -97,6 +105,6 @@ public class PlayerController : MonoBehaviour {
 		RotZ.transform.Rotate (0,0,RotSpeed.z);
 
 		ForwardSpeed *= 0.999f;
-		RotSpeed *= 0.95f;
+		RotSpeed *= 0.995f;
 	}
 }

@@ -1,11 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/RandomSpawner.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/PlayerController.cs">
     <Files>
       <File FileName="Assets/Script/InputManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/WingController.cs" Line="28" Column="28" />
-      <File FileName="Assets/Script/PlayerController.cs" Line="28" Column="28" />
-      <File FileName="Assets/Script/RandomSpawner.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/WingController.cs" Line="26" Column="26" />
+      <File FileName="Assets/Script/PlayerController.cs" Line="18" Column="18" />
+      <File FileName="Assets/Script/RandomSpawner.cs" Line="30" Column="30" />
+      <File FileName="Assets/Script/PlayerInput_User.cs" Line="29" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

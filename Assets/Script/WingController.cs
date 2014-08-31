@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class WingController : MonoBehaviour {
 
 	public GameObject WingPartsPrefab;		// 翼パーツのプレハブ
